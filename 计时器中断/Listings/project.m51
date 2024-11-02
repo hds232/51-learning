@@ -1,0 +1,175 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    07/28/2023  10:59:25  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+D:\KEIL 5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj, .\Objects\time0_init.obj, .\Objects\time0_rountine
+>> .obj TO .\Objects\project PRINT (.\Listings\project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\main.obj (MAIN)
+  .\Objects\time0_init.obj (TIME0_INIT)
+  .\Objects\time0_rountine.obj (TIME0_ROUNTINE)
+  D:\KEIL 5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\project (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         ?DT?TIME0_ROUNTINE
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     003EH     UNIT         ?PR?TIME0_ROUNTINE?TIME0_ROUNTINE
+            CODE    08CAH     0014H     UNIT         ?PR?TIME0_INIT?TIME0_INIT
+            CODE    08DEH     0008H     UNIT         ?PR?MAIN?MAIN
+            CODE    08E6H     0007H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?TIME0_INIT?TIME0_INIT
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  07/28/2023  10:59:25  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0800H         SEGMENT       ?C_C51STARTUP
+  I:000AH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0803H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0800H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0800H         LINE#         133
+  C:0802H         LINE#         134
+  C:0803H         LINE#         135
+  C:0804H         LINE#         136
+  C:0806H         LINE#         185
+  C:0809H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:08DEH         PUBLIC        main
+  -------         PROC          MAIN
+  C:08DEH         LINE#         5
+  C:08DEH         LINE#         6
+  C:08DEH         LINE#         7
+  C:08E1H         LINE#         8
+  C:08E4H         LINE#         9
+  C:08E4H         LINE#         10
+  C:08E4H         LINE#         12
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        TIME0_INIT
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:00A8H.7       PUBLIC        EA
+  D:0089H         PUBLIC        TMOD
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  07/28/2023  10:59:25  PAGE 3
+
+
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:00B8H.1       PUBLIC        PT0
+  B:0088H.4       PUBLIC        TR0
+  C:08CAH         PUBLIC        time0_init
+  -------         PROC          TIME0_INIT
+  C:08CAH         LINE#         3
+  C:08CAH         LINE#         4
+  C:08CAH         LINE#         5
+  C:08CDH         LINE#         6
+  C:08CFH         LINE#         7
+  C:08D1H         LINE#         8
+  C:08D4H         LINE#         9
+  C:08D7H         LINE#         10
+  C:08D9H         LINE#         11
+  C:08DBH         LINE#         12
+  C:08DDH         LINE#         13
+  -------         ENDPROC       TIME0_INIT
+  -------         ENDMOD        TIME0_INIT
+
+  -------         MODULE        TIME0_ROUNTINE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:088CH         PUBLIC        time0_rountine
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  D:0008H         PUBLIC        i
+  D:0009H         PUBLIC        j
+  -------         PROC          TIME0_ROUNTINE
+  C:088CH         LINE#         5
+  C:0897H         LINE#         7
+  C:089AH         LINE#         8
+  C:089DH         LINE#         9
+  C:089FH         LINE#         10
+  C:08A4H         LINE#         11
+  C:08A4H         LINE#         12
+  C:08A6H         LINE#         13
+  C:08ABH         LINE#         14
+  C:08AEH         LINE#         15
+  C:08BEH         LINE#         16
+  C:08C1H         LINE#         17
+  C:08C1H         LINE#         18
+  -------         ENDPROC       TIME0_ROUNTINE
+  -------         ENDMOD        TIME0_ROUNTINE
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0072H BYTE ( 5%) *
+******************************************************************************
+
+Program Size: data=11.0 xdata=0 code=243
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

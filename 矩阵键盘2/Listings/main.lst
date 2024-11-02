@@ -1,0 +1,158 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              07/27/2023 18:21:34 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil 5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.
+                    -lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "matrixkey.h"
+   3          #include "LCD1602.h"
+   4          #include "delay.h"
+   5          #include "action.h"
+   6          
+   7          void main()
+   8          {
+   9   1              unsigned char keynum=0, count=0, wcount=0 ;                             //定义输入位数总次数，密码错误次数
+  10   1              unsigned char state=0, state1=0;                                                //定义状态参数state，state1
+  11   1              unsigned int password=0, turepassword=9999;                             //定义正确密码
+  12   1              LCD_Init();
+  13   1              LCD_ShowString(1, 1, "Password:");
+  14   1              LCD_ShowNum(2, 1, password, 4);
+  15   1              while(1)                                                                                                //矩阵键盘循环扫描开始
+  16   1              {
+  17   2                      keynum=0;
+  18   2                      if(wcount==3)                                                                           //如果失败次数等于3，锁定程序。如果此段代码放于if(keynum)�
+             -�，会造成次数为3时按键后才会锁定程序
+  19   2                      {
+  20   3                              LCD_Clear();
+  21   3                              LCD_ShowString(1, 1, "Locked!!!");
+  22   3                              while(1);
+  23   3                      }
+  24   2                      keynum=matrixkey();
+  25   2                      if(keynum)
+  26   2                      {
+  27   3                              if(keynum<=10)                                                                  //键入矩阵编码小于11，输入密码并使密码位次加1                                       
+  28   3                              {
+  29   4                                      if(count==4)                                                            //输入密码位次等于4时，跳出循环重新执行（即锁定输入）
+  30   4                                              continue;
+  31   4                                      password*=10;
+  32   4                                      password+=keynum%10;
+  33   4                                      count++;
+  34   4                                      LCD_ShowNum(2, 1, password, 4);
+  35   4                              }
+  36   3                              if(keynum==11)                                                                  //确认密码
+  37   3                              {
+  38   4                                      if(state1==1)                                                           //若程序处于更改密码第二阶段执行
+  39   4                                      {
+  40   5                                              turepassword=password;
+  41   5                                              state1=0; password=0; count=0;                  //相关参数和输入位次全部置零
+  42   5                                              LCD_ShowString(1, 14, "OK ");
+  43   5                                              delay(250);
+  44   5                                              LCD_Clear();
+  45   5                                              LCD_ShowString(1, 1, "Password:");
+  46   5                                              LCD_ShowNum(2, 1, password, 4);
+  47   5                                              continue;
+  48   5                                      }
+  49   4                                      else
+  50   4                                      {
+  51   5                                              if(password==turepassword)
+  52   5                                              {
+  53   6                                                      if(state==1)                                            //程序处于更改密码第一阶段执行
+C51 COMPILER V9.60.7.0   MAIN                                                              07/27/2023 18:21:34 PAGE 2   
+
+  54   6                                                      {
+  55   7                                                              password=0; count=0; wcount=0;
+  56   7                                                              state=0; state1=1;                              //更新状态参数
+  57   7                                                              LCD_Clear();
+  58   7                                                              LCD_ShowString(1, 1, "New Password:");
+  59   7                                                              LCD_ShowNum(2, 1, password, 4);
+  60   7                                                              continue;
+  61   7                                                      }
+  62   6                                                      else                                                            //密码正确执行
+  63   6                                                      {
+  64   7                                                              LCD_ShowString(1, 14, "OK ");
+  65   7                                                              delay(250);
+  66   7                                                              LCD_Clear();
+  67   7                                                              action();                                               //执行操作
+  68   7                                                              continue;
+  69   7                                                      }
+  70   6                                              }
+  71   5                                              else
+  72   5                                              {
+  73   6                                                      if(state==1)                                            //更改密码旧密码输入错误时执行
+  74   6                                                      {
+  75   7                                                              LCD_ShowString(1, 14, "ERR");
+  76   7                                                              count=0;
+  77   7                                                              wcount++;
+  78   7                                                              password=0;
+  79   7                                                              LCD_ShowNum(2, 1, password, 4);
+  80   7                                                              continue;
+  81   7                                                      }
+  82   6                                                      else                                                            //密码错误使位次清零，失败次数加1
+  83   6                                                      {
+  84   7                                                              LCD_ShowString(1, 14, "ERR");
+  85   7                                                              count=0;
+  86   7                                                              wcount++;
+  87   7                                                              password=0;
+  88   7                                                              delay(250);
+  89   7                                                              LCD_Clear();
+  90   7                                                              LCD_ShowString(1, 1, "Try again:");
+  91   7                                                              LCD_ShowNum(1, 15, wcount, 1);  //显示失败次数
+  92   7                                                              LCD_ShowNum(2, 1, password, 4);
+  93   7                                                              continue;
+  94   7                                                      }
+  95   6                                              }
+  96   5                                      }
+  97   4                              }
+  98   3                              if(keynum==12)                                                                  //定义清零键
+  99   3                              {
+ 100   4                                      password=0;
+ 101   4                                      count=0;
+ 102   4                                      LCD_ShowNum(2, 1, password, 4);
+ 103   4                              }
+ 104   3                              if(keynum==16)                                                                  //定义退位键
+ 105   3                              {
+ 106   4                                      password/=10;
+ 107   4                                      if(count==0) {}                                                         //密码位次退为零时，锁定退位
+ 108   4                                      else
+ 109   4                                              count--;
+ 110   4                                      LCD_ShowNum(2, 1, password, 4);
+ 111   4                              }
+ 112   3                              if(keynum==13)                                                                  //定义更改密码键
+ 113   3                              {
+ 114   4                                      password=0; state=1; count=0;
+ 115   4                                      LCD_Clear();
+C51 COMPILER V9.60.7.0   MAIN                                                              07/27/2023 18:21:34 PAGE 3   
+
+ 116   4                                      LCD_ShowString(1, 1, "Old Password:");          //提示输入旧密码
+ 117   4                                      LCD_ShowNum(2, 1, password, 4);
+ 118   4                              }
+ 119   3                              if(keynum==14)                                                                  //重新锁定
+ 120   3                              {
+ 121   4                                      password=0; count=0; wcount=0;                          //操作所改变的所有状态参数清零
+ 122   4                                      state=0; state1=0;
+ 123   4                                      LCD_Clear();
+ 124   4                                      LCD_ShowString(1, 1, "Password:");
+ 125   4                                      LCD_ShowNum(2, 1, password, 4);
+ 126   4                              }
+ 127   3                      }
+ 128   2              }
+ 129   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    519    ----
+   CONSTANT SIZE    =     67    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

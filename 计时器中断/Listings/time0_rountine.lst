@@ -1,0 +1,42 @@
+C51 COMPILER V9.60.7.0   TIME0_ROUNTINE                                                    07/28/2023 10:46:31 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE TIME0_ROUNTINE
+OBJECT MODULE PLACED IN .\Objects\time0_rountine.obj
+COMPILER INVOKED BY: D:\Keil 5\C51\BIN\C51.EXE time0_rountine.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\time0_rountine.lst) OBJECT(.\Objects\time0_rountine.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          unsigned char i=0, j=0;
+   4          
+   5          void time0_rountine()   interrupt 1
+   6          {
+   7   1              TH0=56319/256;
+   8   1              TL0=56319%256;
+   9   1              i++; 
+  10   1              if(i==100)
+  11   1              {
+  12   2                      j++;
+  13   2                      if(j==8)
+  14   2                              j=0;
+  15   2                      P2=~(0x01<<j);
+  16   2                      i=1;
+  17   2              }
+  18   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     62    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
